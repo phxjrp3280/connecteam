@@ -11,6 +11,9 @@ app.use('/teams', teamController);
 const billingController = require('./controllers/billing.js');
 app.use('/billing', billingController);
 
+const smsController = require('./controllers/sms.js');
+app.use('/sms', smsController);
+
 postgres.connect();
 
 app.listen(process.env.PORT || 3000, () => {

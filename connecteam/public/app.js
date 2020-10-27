@@ -9,6 +9,7 @@ class App extends React.Component {
     phoneok: '',
     bill_amt: '',
     items: [],
+    billing: [],
     screenToShow: ''
 }
 
@@ -29,13 +30,16 @@ messageClick = () => {
     })
 }
 billingClick = () => {
-    this.setState({
-        screenToShow: 'Billing'
-    })
+  axios['get']('/billing').then(
+    (response) => {
+        console.log(response.data, 'get data response');
+        this.setState({
+            billing: response.data,
+            screenToShow: 'Billing'
+        }
+    )
+})
 }
-
-
-
 
 // UPDATE Team Information
  updateTeamClick = () => {
@@ -47,6 +51,31 @@ billingClick = () => {
       items: response.data,
       screenToShow: 'Team'
     })
+  })
+}
+
+addPlayerClick = () => {
+  event.preventDefault()
+  console.log(this.state.currentItem.team_name)
+  axios.post(`/teams`,this.state.currentItem)
+  .then(response => {
+   this.setState({
+     items: response.data,
+     screenToShow: 'Team'
+   })
+  })
+  }
+
+
+addTeamClick = () => {
+  axios['get']('/teams').then(
+      (response) => {
+          console.log(response.data, 'get data response');
+          this.setState({
+              items: response.data,
+              screenToShow: 'AddPlayer'
+          }
+      )
   })
 }
 
@@ -87,89 +116,201 @@ deleteTeamClick= () => {
     })
   }
 
-  onClickHandler = () => {
-      this.getdata();
-  }
-
-
-
     render = () => {
       let screen = null;
       switch(this.state.screenToShow){
         case 'Team':
-
-          screen = <div>
-                <h1> Teams Screen </h1>
+          screen =
+            <div>
+                <div className = 'playertitle'>
+                  <h1 className = 'screen'>Your Players </h1>
+                  <a href='#' onClick={this.addTeamClick}>
+                    <div className='addbtn'>Add a Player</div>
+                  </a>
+                  </div>
+                <div className ='headerContainer'>
+                  <div id='teamName' className='headerDetail'>Team Name</div>
+                  <div id='playerName' className='headerDetail'>Player Name</div>
+                  <div id='parentName'className='headerDetail'>Parent Name</div>
+                  <div id='preferredPhone'className='headerDetail'>Preferred Phone</div>
+                  <div className='headerDetail'>Text OK</div>
+                  <div className='headerDetail'>Phone OK</div>
+                </div>
                 <ul>
                   {this.state.items.map(
                     (item, index) =>{
-                      return(
-                        <a href="#" key={item.id} onClick={()=>{this.editTeamClick(index);}}>
-                           <div>
-                             {item['team_name']}{' '}
-                             {item.player_name}{' '}
-                             {item.parent_name}{' '}
-                             {item.phone1}{' '}
-                             {item.textok}{' '}
-                             {item.phoneok}{' '}
-                           </div>
+                      let playerList= (
+                        <a  className="playerContainer" href="#" key={item.id} onClick={()=>{this.editTeamClick(index);}}>
+                          <div className='playerElement'>
+                             {item['team_name']}
+                          </div>
+                          <div className='playerElement'>
+                             {item.player_name}
+                          </div>
+                          <div className='playerElement'>
+                             {item.parent_name}
+                          </div>
+                          <div className='playerElement'>
+                             {item.phone1}
+                          </div>
+                          <div className='playerElement'>
+                             {item.textok}
+                          </div>
+                          <div className='playerElement'>
+                             {item.phoneok}
+                          </div>
                         </a>
                       )
+                      return playerList
                     }
                   )}
           </ul>
         </div>
           break;
         case 'Message':
-          screen = (<h1> Messaging Screen </h1>)
+          screen = (
+            <div className = 'messaging'>
+              <h1> Messaging Screen </h1>
+            </div>
+          )
           break;
+          case 'AddPlayer':
+            screen = (
+              <div>
+                <div className="add player">
+                <h1 className='editTeam'> Add Player Screen </h1>
+                  <div className="editForm">
+                   <h3>
+                    <form onSubmit={this.addPlayerClick} className='form'>
+                      <div className='formlabeltop'>
+                        <div className='formlabel'>Team Name</div>
+                        <input onChange={this.onInputChange} name="team_name" placeholder='Team Name' type="text"/>
+                      </div>
+                      <div className='formlabeltop'>
+                        <div className='formlabel'>Player Name</div>
+                        <input onChange={this.onInputChange} name="player_name" placeholder='Player Name' type="text" /><br/>
+                      </div>
+                      <div className='formlabeltop'>
+                        <div className='formlabel'>Parent Name</div>
+                        <input onChange={this.onInputChange} name="parent_name" placeholder='Parent Name' type="text" /><br/>
+                      </div>
+                      <div className='formlabeltop'>
+                        <div className='formlabel'>Phone Number</div>
+                        <input onChange={this.onInputChange} name="phone1" placeholder='Phone Number' type="text" /><br/>
+                      </div>
+                      <div className='formlabeltop'>
+                        <div className='formlabel'>Text OK</div>
+                        <input onChange={this.onInputChange} name="textok" placeholder='OK to text? y or n' type="text" /><br/>
+                      </div>
+                      <div className='formlabeltop'>
+                        <div className='formlabel'>Phone OK</div>
+                        <input onChange={this.onInputChange} name="phoneok" placeholder='OK to Phone? y or n' type="text" /><br/>
+                      </div>
+                      <input type="submit" className="btn btn-secondary" value="Add Player"/>
+                    </form>
+                    </h3>
+                  </div>
+                </div>
+              </div>
+            )
+            break;
         case 'EditTeam':
             screen = <div>
-            <h1> Edit Team Screen </h1>
-            <div className="CreateItem">
-              <div className="card-body">
-                <form onSubmit={this.updateTeamClick}>
-                  <input onChange={this.onInputChange} name="team_name" value={this.state.currentItem.team_name} type="text"/><br/>
-                  <input onChange={this.onInputChange} name="player_name" value={this.state.currentItem.player_name} type="text" /><br/>
-                  <input onChange={this.onInputChange} name="parent_name" value={this.state.currentItem.parent_name} type="text" /><br/>
-                  <input onChange={this.onInputChange} name="phone1" value={this.state.currentItem.phone1} type="text" /><br/>
-                  <input onChange={this.onInputChange} name="textok" value={this.state.currentItem.textok} type="text" /><br/>
-                  <input onChange={this.onInputChange} name="phoneok" value={this.state.currentItem.phoneok} type="text" /><br/>
-                  <input type="submit" class="btn btn-secondary" value="Update Player"/>
+            <div className="editTeam">
+            <h1 className='editTeam'> Edit Team Screen </h1>
+              <div className="editForm">
+               <h3>
+                <form onSubmit={this.updateTeamClick} className='form'>
+                  <div className='formlabeltop'>
+                    <div className='formlabel'>Team Name</div>
+                    <input onChange={this.onInputChange} name="team_name" value={this.state.currentItem.team_name} type="text"/>
+                  </div>
+                  <div className='formlabeltop'>
+                    <div className='formlabel'>Player Name</div>
+                    <input onChange={this.onInputChange} name="player_name" value={this.state.currentItem.player_name} type="text" /><br/>
+                  </div>
+                  <div className='formlabeltop'>
+                    <div className='formlabel'>Parent Name</div>
+                    <input onChange={this.onInputChange} name="parent_name" value={this.state.currentItem.parent_name} type="text" /><br/>
+                  </div>
+                  <div className='formlabeltop'>
+                    <div className='formlabel'>Phone Number</div>
+                    <input onChange={this.onInputChange} name="phone1" value={this.state.currentItem.phone1} type="text" /><br/>
+                  </div>
+                  <div className='formlabeltop'>
+                    <div className='formlabel'>Text OK</div>
+                    <input onChange={this.onInputChange} name="textok" value={this.state.currentItem.textok} type="text" /><br/>
+                  </div>
+                  <div className='formlabeltop'>
+                    <div className='formlabel'>Phone OK</div>
+                    <input onChange={this.onInputChange} name="phoneok" value={this.state.currentItem.phoneok} type="text" /><br/>
+                  </div>
+                  <input type="submit" className="btn btn-secondary" value="Update Player"/>
                 </form>
+                </h3>
               </div>
               <a href='#' onClick={this.deleteTeamClick}>  <div className='deletebtn'>Delete Player</div></a>
             </div>
           </div>
-
-
             break;
         case 'Billing':
-          screen = (<h1>Billing Screen </h1>)
+        let totalcost=0
+          screen =   <div className = 'allOfBilling'>
+          <div className ='billingHeaderContainer'>
+            <div id='jobname' className='headerDetail'>Job Name</div>
+            <div id='playername' className='headerDetail'>Player Name</div>
+            <div id='targetPhone' className='headerDetail'>Target Phone</div>
+            <div id='datetime'className='headerDetail'>Date</div>
+          </div>
+            <ul>
+              {this.state.billing.map(
+                (item, index) =>{
+                  totalcost += .05
+                  let billingScreen = (
+                    <div className="billingContainer" key={item.id}>
+                      <div className='billingElement'>
+                         {item.jobname}
+                      </div>
+                      <div className='billingElement'>
+                         {item.player_name}
+                      </div>
+                      <div className='billingElement'>
+                         {item.target_phone1}
+                      </div>
+                      <div className='billingElement'>
+                         {item.target_datetime}
+                      </div>
+                    </div>
+                  )
+                  return billingScreen
+                }
+              )}
+            </ul>
+            <div className = 'totalcost'>
+              <div>Total Cost</div>
+              <div>${totalcost = totalcost.toFixed(2)}</div>
+            </div>
+    </div>
             break;
           default:
       }
 
-        return <div className="Inventory-container">
-
-
-                    <nav className="navbar fixed-top bg-custom-2 navbar-expand-lg navbar-light bg-light">
-                      <div className="navbar-nav">
-                        <a className="nav-item nav-link active" href="#" onClick={()=>{location.reload();}}><h5>ConnecTeam</h5> </a>
-                        <a className="nav-item nav-link active" href="#"
-                        onClick={()=>{this.teamClick();}}><span>Teams</span></a>
-                        <a className="nav-item nav-link" href="#"
-                        onClick={()=>{this.messageClick();}}><span>Message</span></a>
-                        <a className="nav-item nav-link" href="#"
-                        onClick={()=>{this.billingClick();}}><span>Billing Detail</span></a>
-                      </div>
-                    </nav>
-
-                      {screen}
-
-                </div>
-
-
+        return (
+          <div className='container'>
+            <nav className="navbar fixed-top bg-custom-2 navbar-expand-lg navbar-light bg-light">
+              <div className="navbar-nav">
+                <a className="nav-item nav-link active" href="#" onClick={()=>{location.reload();}}><h1>ConnecTeam Sports Messaging</h1> </a>
+                <a className="nav-item nav-link active" href="#"
+                onClick={()=>{this.teamClick();}}><span>Players</span></a>
+                <a className="nav-item nav-link" href="#"
+                onClick={()=>{this.messageClick();}}><span>Message</span></a>
+                <a className="nav-item nav-link" href="#"
+                onClick={()=>{this.billingClick();}}><span>Billing Detail</span></a>
+              </div>
+            </nav>
+              {screen}
+          </div>
+        )
     }
 }
 

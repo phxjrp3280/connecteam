@@ -4,6 +4,129 @@
   border: 2px solid black;
   border-radius:10px;
   padding: 10px;
-  margin: 10px;
+  margin: 10px 0px 0px 20px;
 
 }
+.nav-item, .screen{
+  padding: 10px 20px 10px 10px;
+  font-family: 'Cormorant Garamond', serif;
+  width:300px;
+}
+
+.addbtn{
+  padding: 5px 0px 0px 10px;
+  font-family: 'Cormorant Garamond', serif;
+  width:94px;
+  border: 2px solid black;
+  border-radius: 10px;
+  height: 25px;
+  margin: 35px 0px 0px 10px;
+}
+
+.playerContainer {
+  display: grid;
+  grid-template-columns: 18% 18% 18% 18% 14% 14%;
+  grid-gap:1%
+}
+
+.headerContainer {
+  display: grid;
+  grid-template-columns: 18% 17% 18% 18% 14% 14%;
+  grid-gap:1%
+}
+
+.playerElement {
+  padding: 10px;
+    font-family: 'Cormorant Garamond', serif;
+}
+
+#teamName {
+  padding: 0px 0px 0px 50px;
+}
+
+#playerName {
+  padding: 0px 0px 0px 43px;
+}
+
+#parentName {
+  padding: 0px 0px 0px 35px;
+}
+
+#preferredPhone {
+  padding: 0px 0px 0px 25px;
+}
+
+#jobname {
+  padding: 0px 0px 0px 25px;
+}
+#playername {
+  padding: 0px 0px 0px 12px;
+}
+
+
+.billingHeaderContainer {
+  padding: 20px 5px 10px 10px;
+  display: grid;
+  grid-template-columns: 18% 18% 18% 18% 14% 14%;
+  grid-gap:1%
+}
+.billingContainer{
+    display: grid;
+    grid-template-columns: 18% 18% 18% 18% 14% 14%;
+    font-family: 'Cormorant Garamond', serif;
+}
+
+.billingElement, .totalcost {
+  font-family: 'Cormorant Garamond', serif;
+}
+
+.editTeam{
+      font-family: 'Cormorant Garamond', serif;
+}
+
+.totalcost {
+  font-family: 'Cormorant Garamond', serif;
+  display:grid;
+  grid-template-columns: 6% 18% 18% 18% 14% 14%;
+  padding: 5px 5px 5px 40px;
+}
+
+input[type=text], select {
+    font-family: 'Cormorant Garamond', serif;
+    padding: 0px 0px 0px 5px;
+    border: 1px solid black;
+    border-radius: 3px;
+    margin:2px 0px 2px 20px;
+    height:30px;
+}
+
+input[type=submit] {
+  width: 133px;
+  background-color: light-grey;
+  margin: 15px 0px 10px 170px;
+  border: 2px solid black;
+  border-radius:5px;
+}
+
+.formlabeltop{
+  font-family: 'Cormorant Garamond', serif;
+  display: flex;
+  margin: 0px 0px 0px 15px;
+}
+
+.formlabel{
+  font-family: 'Cormorant Garamond', serif;
+  margin: 0px 0px 0px 15px;
+  width: 100px;
+  padding: 10px;
+}
+
+.messaging {
+    font-family: 'Cormorant Garamond', serif;
+}
+
+.playertitle {
+  padding: 20px 5px 10px 10px;
+  display: grid;
+  grid-template-columns: 18% 18% 18% 18% 14% 14%;
+  grid-gap:1%}

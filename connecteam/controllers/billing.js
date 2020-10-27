@@ -3,7 +3,8 @@ const billing = express.Router();
 const postgres = require('../postgres.js');
 
 billing.get('/', (req, res) => {
-    postgres.query('SELECT * FROM teams_transaction', (err, results) => {
+  console.log('in get route')
+    postgres.query('SELECT a.id, a.jobname, a.target_phone1, a.target_datetime, b.player_name FROM teams_transaction a, teams b WHERE a.target_phone1 = b.phone1', (err, results) => {
         res.json(results.rows)
     });
 });

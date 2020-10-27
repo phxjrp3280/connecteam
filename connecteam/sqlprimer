@@ -1,25 +1,5 @@
-drop table teams;
 
-create table teams (id SERIAL,
-  team_name VARCHAR(255),
-  player_name varchar(255),
-  parent_name varchar(255),
-  phone1 varchar(255),
-  textok varchar(2),
-  phoneok varchar(2));
-
-
-  INSERT INTO teams (team_name, player_name, parent_name, phone1, textok, phoneok) VALUES
-  ('Flaming Envelopes', 'jj peterseroni', 'lola peterseroni','555-555-1111','y','n');
-
-  INSERT INTO teams (team_name, player_name, parent_name, phone1, textok, phoneok) VALUES
-  ('Flaming Envelopes', 'trevor klein', 'joe klein','555-555-2222','y','n');
-
-  INSERT INTO teams (team_name, player_name, parent_name, phone1, textok, phoneok) VALUES
-  ('Flaming Envelopes', 'sam barr', 'robert barr','555-555-3333','y','n');
-
-  INSERT INTO teams (team_name, player_name, parent_name, phone1, textok, phoneok) VALUES
-  ('Flaming Envelopes', 'ian haines', 'andrew haines','555-555-4444','y','n');
+drop table teams_transaction;
 
   create table teams_transaction (id SERIAL,
     jobname VARCHAR(255),
