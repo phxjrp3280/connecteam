@@ -17,7 +17,7 @@ router1.get('/', (req, res) => {
 
 
 
-
+////507cbb81
 router1.delete('/:id', (req, res) => {
     postgres.query(`DELETE FROM teams WHERE id = ${req.params.id};`, (err, results) => {
         postgres.query('SELECT * FROM teams;', (err, results) => {

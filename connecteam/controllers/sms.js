@@ -1,7 +1,7 @@
 const express = require('express');
 const sms = express.Router();
-const accountSid = 'AC95582030692c7c46040a8c3ecffc507c';
-const authToken = '104394c060417a9b866ffc754959bb81';
+const accountSid = 'AC95582030692c7c46040a8c3ecffc196d';
+const authToken = '104394c060417a9b866ffc754959wh81';
 const client = require('twilio')(accountSid, authToken);
 
 
@@ -15,3 +15,4 @@ sms.get('/:msg', (req, res) => {client.messages
 });
 
 module.exports = sms;
+//507cbb81
