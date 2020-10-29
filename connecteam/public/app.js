@@ -7,7 +7,8 @@ class App extends React.Component {
     phone1: '',
     textok: '',
     phoneok: '',
-    bill_amt: '',
+    job_name: '',
+    job_recs: 0,
     items: [],
     billing: [],
     screenToShow: ''
@@ -27,7 +28,7 @@ teamClick = () => {
 messageClick = () => {
   axios['get']('/teams').then(
       (response) => {
-          console.log(response.data, 'get data response');
+          console.log(response.data, 'get data response from messageClick');
           this.setState({
               items: response.data,
               screenToShow: 'Message'
@@ -95,7 +96,30 @@ editTeamClick  = (index) => {
 }
 
 msgPlayer  = () => {
-  console.log('ready to submit')
+  event.preventDefault()
+  let updateBilling ={}
+  //loop through players.  Write a billing record then send an sms
+  for(let x=0;x<this.state.items.length;x++){
+    updateBilling =
+    {
+      jobname: this.state.currentItem.job_name,
+      target_phone1: this.state.items[x].phone1,
+      target_datetime: (new Date().toLocaleString())
+    }
+    axios.post(`/billing`,updateBilling)
+    .then(response => {
+      this.setState({
+        screenToShow: 'Team'
+      })
+    })
+
+    axios.post(`/sms`,{msg:this.state.currentItem.msgToSend})
+    .then(response => {
+      this.setState({
+        screenToShow: 'Team'
+      })
+    }).then(this.teamClick)
+  }  //end of loop
 }
 
 deleteTeamClick= () => {
@@ -105,16 +129,6 @@ deleteTeamClick= () => {
    })
  }).then(this.teamClick)
 }
-//
-
-// const address {
-//   street: '7735 N. 12th Ave',
-//   city: 'Phoenix',
-//   state: 'AZ',
-//   zip: 85021,
-//   [key]: 'glendale'
-// }
-
 
   onInputChange = (event) => {      ///target is supplied by the software - you have to trust the software
      /// this copies all the items.  this is done to separate the state value of items from the function value of items
@@ -137,7 +151,7 @@ deleteTeamClick= () => {
                   <a href='#' onClick={this.addTeamClick}>
                     <div className='addbtn'>Add a Player</div>
                   </a>
-                  </div>
+                </div>
                 <div className ='headerContainer'>
                   <div id='teamName' className='headerDetail'>Team Name</div>
                   <div id='playerName' className='headerDetail'>Player Name</div>
@@ -184,9 +198,16 @@ deleteTeamClick= () => {
                   <h1 className = 'screen'>Send Messages </h1>
                 </div>
                 <form onSubmit={this.msgPlayer} className='form'>
-                  <textarea onChange={this.onInputChange} name="msgToSend" rows="4" cols="50" placeholder='Enter 140 char msg here'>
-                  </textarea>
-                  <input type="submit" className="btn btn-secondary" value="Send SMS Messages"/>
+                  <div className ='jobname'>
+                  <div className = 'jntitle'>Enter Name of Msg</div>
+                    <input onChange={this.onInputChange} name="job_name" placeholder='Enter Job Name' type="text" className = 'jnbox'/>
+                  </div>
+                  <div className ='jobname'>
+                  <div className = 'jntitle'>Enter your message</div>
+                    <textarea onChange={this.onInputChange} name="msgToSend" rows="4" cols="50" placeholder='Enter 140 char msg here'>
+                    </textarea>
+                  </div>
+                  <input type="submit" className="submsg" value="Send SMS Messages"/>
                 </form>
                 <div className ='headerContainer'>
                   <div id='teamName' className='headerDetail'>Team Name</div>
@@ -231,7 +252,7 @@ deleteTeamClick= () => {
           case 'AddPlayer':
             screen = (
               <div>
-                <div className="add player">
+                <div className="screen">
                 <h1 className='editTeam'> Add Player Screen </h1>
                   <div className="editForm">
                    <h3>
@@ -309,7 +330,8 @@ deleteTeamClick= () => {
             break;
         case 'Billing':
         let totalcost=0
-          screen =   <div className = 'allOfBilling'>
+          screen =   <div className='billingHead'>
+          <h1 className = 'screen'>Billing Detail</h1>
           <div className ='billingHeaderContainer'>
             <div id='jobname' className='headerDetail'>Job Name</div>
             <div id='playername' className='headerDetail'>Player Name</div>

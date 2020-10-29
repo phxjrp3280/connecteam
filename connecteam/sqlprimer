@@ -4,7 +4,7 @@ drop table teams_transaction;
   create table teams_transaction (id SERIAL,
     jobname VARCHAR(255),
     target_phone1 varchar(255),
-    target_datetime date);
+    target_datetime  TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP);
 
   INSERT INTO teams_transaction (jobname, target_phone1, target_datetime) VALUES
   ('tuesdays calls','555-555-1111','10/21/2020');

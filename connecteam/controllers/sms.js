@@ -1,13 +1,12 @@
 const express = require('express');
 const sms = express.Router();
-const accountSid = 'AC95582030692c7c46040a8c3ecffc196d';
-const authToken = '104394c060417a9b866ffc754959wh81';
+require('dotenv').config();
+const accountSid = process.env.TWILIO_ACCOUNT_SID;
+const authToken = process.env.TWILIO_AUTH_TOKEN;
 const client = require('twilio')(accountSid, authToken);
-
-
-sms.get('/:msg', (req, res) => {client.messages
+sms.post('/', (req, res) => {client.messages
   .create({
-     body: `${req.params.msg}`,
+     body: req.body.msg,
      from: '+12052735277',
      to: '+15209075815'
    })
@@ -15,4 +14,3 @@ sms.get('/:msg', (req, res) => {client.messages
 });
 
 module.exports = sms;
-//507cbb81
