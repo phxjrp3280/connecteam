@@ -189,3 +189,15 @@ footer {
 i {
   padding: 5px;
 }
+
+.sentdiv {
+  display:flex;
+}
+.sentel {
+  padding: 1px;
+}
+.billdetail, .sentel, .sentdiv {
+  font-family: 'Cormorant Garamond', serif;
+  padding: 20px 5px 10px 10px;
+
+}

@@ -109,7 +109,7 @@ msgPlayer  = () => {
     axios.post(`/billing`,updateBilling)
     .then(response => {
       this.setState({
-        screenToShow: 'Team',
+        screenToShow: 'Sent',
         job_recs: this.state.items.length
       })
     })
@@ -332,7 +332,7 @@ deleteTeamClick= () => {
         case 'Billing':
         let totalcost=0
           screen =   <div>
-          <h1>Billing Detail</h1>
+          <h1 className ='billdetail'>Billing Detail</h1>
           <div className ='billingHeaderContainer'>
             <div id='jobname' className='headerDetail'>Job Name</div>
             <div id='playername' className='headerDetail'>Player Name</div>
@@ -372,13 +372,16 @@ deleteTeamClick= () => {
             case 'Sent':
               screen =
                 <div>
-                    <div className = 'playertitle'>
-                      <h1 className = 'screen'>Your Players </h1>
-                      <a href='#' onClick={this.addTeamClick}>
-                        <div className='addbtn'>Add a Player</div>
-                      </a>
+                  <div className = 'EditTeam'>
+                    <h1 className = 'sentdiv'>Records Sent </h1>
+                    <div className='sentdiv'>
+                      <div className='sentel'>{this.state.job_recs}</div>
+                      <div className='sentel'>text messages sent on </div>
+                      <div className='sentel'>{new Date().toLocaleString()} </div>
                     </div>
+                  </div>
                 </div>
+            break;
           default:
       }
 
@@ -404,7 +407,7 @@ deleteTeamClick= () => {
                   <i className="fab fa-html5"></i>
                   <i className="fab fa-js"></i>
                   <i className="fab fa-css3"></i>
-                  <i className="fab fa-node-js"></i>
+                  <i class="fab fa-node-js"></i>
                 </li>
               </ul>
             </div>
