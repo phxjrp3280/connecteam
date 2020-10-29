@@ -7,10 +7,20 @@
   margin: 10px 0px 0px 20px;
 
 }
-.nav-item, .screen{
+.nav-item{
   padding: 10px 20px 10px 10px;
   font-family: 'Cormorant Garamond', serif;
   width:300px;
+}
+
+main {
+  background-image: url("./socpic.jpg");
+  min-height: 500px;
+  background-position:center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position:relative;
+  height:1200px;
 }
 
 .addbtn{
@@ -21,6 +31,12 @@
   border-radius: 10px;
   height: 25px;
   margin: 35px 0px 0px 10px;
+}
+
+.container {
+  background-color: white;
+  opacity: .9;
+  border-radius: 3px;
 }
 
 .playerContainer {
@@ -63,11 +79,19 @@
   padding: 0px 0px 0px 12px;
 }
 
+#targetPhone {
+  padding: 0px 0px 0px 0px;
+}
+
+#datetime {
+  padding: 0px 0px 0px 0px;
+}
+
 
 .billingHeaderContainer {
   padding: 20px 5px 10px 10px;
   display: grid;
-  grid-template-columns: 18% 18% 18% 18% 14% 14%;
+  grid-template-columns: 18% 17% 17% 18% 14% 14%;
   grid-gap:1%
 }
 .billingContainer{
@@ -100,6 +124,7 @@ input[type=text]{
     border-radius: 3px;
     margin:2px 0px 2px 20px;
     height:30px;
+    background-color: white;
 }
 
 textarea {
@@ -150,4 +175,17 @@ input[type=submit] {
 .jntitle {
   margin-left: 25px;
   width:300px;
+}
+
+footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: white;
+  text-align: center;
+}
+
+i {
+  padding: 5px;
 }

@@ -109,14 +109,15 @@ msgPlayer  = () => {
     axios.post(`/billing`,updateBilling)
     .then(response => {
       this.setState({
-        screenToShow: 'Team'
+        screenToShow: 'Team',
+        job_recs: this.state.items.length
       })
     })
 
     axios.post(`/sms`,{msg:this.state.currentItem.msgToSend})
     .then(response => {
       this.setState({
-        screenToShow: 'Team'
+        screenToShow: 'Sent'
       })
     }).then(this.teamClick)
   }  //end of loop
@@ -330,8 +331,8 @@ deleteTeamClick= () => {
             break;
         case 'Billing':
         let totalcost=0
-          screen =   <div className='billingHead'>
-          <h1 className = 'screen'>Billing Detail</h1>
+          screen =   <div>
+          <h1>Billing Detail</h1>
           <div className ='billingHeaderContainer'>
             <div id='jobname' className='headerDetail'>Job Name</div>
             <div id='playername' className='headerDetail'>Player Name</div>
@@ -368,12 +369,22 @@ deleteTeamClick= () => {
             </div>
     </div>
             break;
+            case 'Sent':
+              screen =
+                <div>
+                    <div className = 'playertitle'>
+                      <h1 className = 'screen'>Your Players </h1>
+                      <a href='#' onClick={this.addTeamClick}>
+                        <div className='addbtn'>Add a Player</div>
+                      </a>
+                    </div>
+                </div>
           default:
       }
 
         return (
           <div className='container'>
-            <nav className="navbar fixed-top bg-custom-2 navbar-expand-lg navbar-light bg-light">
+            <nav className="navbar">
               <div className="navbar-nav">
                 <a className="nav-item nav-link active" href="#" onClick={()=>{location.reload();}}><h1>ConnecTeam Sports Messaging</h1> </a>
                 <a className="nav-item nav-link active" href="#"
@@ -385,6 +396,19 @@ deleteTeamClick= () => {
               </div>
             </nav>
               {screen}
+            <footer>
+            <div>
+              <ul>
+                <li className="list-inline-item">
+                  <i className="fab fa-react"></i>
+                  <i className="fab fa-html5"></i>
+                  <i className="fab fa-js"></i>
+                  <i className="fab fa-css3"></i>
+                  <i className="fab fa-node-js"></i>
+                </li>
+              </ul>
+            </div>
+            </footer>
           </div>
         )
     }
